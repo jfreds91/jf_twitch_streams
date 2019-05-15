@@ -157,7 +157,7 @@ def return_figures():
     
     # append all charts to the figures list
     figures = []
-    figures.append(dict(data=trace_data, layout=layout_data)
+    figures.append(dict(data=trace_data, layout=layout_data))
     #figures.append(dict(data=graph_one, layout=layout_one))
     #figures.append(dict(data=graph_two, layout=layout_two))
     #figures.append(dict(data=graph_three, layout=layout_three))
