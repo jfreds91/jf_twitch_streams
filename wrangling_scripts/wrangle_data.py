@@ -33,9 +33,67 @@ def return_figures():
 
     """
 
-    # first chart plots arable land from 1990 to 2015 in top 10 economies 
-    # as a line chart
+    # initialize client
+    client  = TwitchClient(client_id='o77c1kh7o8s52pt3dtzj8xaypu0699')
     
+    # use client to query games (returns top 10 by default)
+    games = client.games.get_top()
+    
+    # parse returned structure for vars
+    game_results = []
+    game_images = []
+    for game in games:
+        game_results.append((game['game']['name'], game['viewers'], game['channels']))
+        game_images.append(game['game']['box']['medium'])
+        
+     # convert values to plotly format
+    x = [i[0] for i in game_results]
+    y1_vals = [i[1] for i in game_results]
+    y2_vals = [i[2] for i in game_results]
+    y2_max = max(y2_vals)
+    
+    # Develop Viewing and Streaming plot
+    trace1 = go.Bar(
+        x=x,
+        y=y1_vals,
+        offset=-.1,
+        width = .5,
+        name='Viewers',
+        marker=dict(
+            color='rgb(55, 83, 109)'
+        )
+    )
+    trace2 = go.Bar(
+        x=x,
+        y=y2_vals,
+        name='Streamers',
+        yaxis='y2',
+        offset = .1,
+        width = .5,
+        marker=dict(
+            color='rgb(158, 88, 201)'
+        )
+    )
+
+    trace_data = [trace1, trace2]
+
+    layout_data = go.Layout(
+        title="Top 10 games on Twitch",
+        barmode='group',
+        yaxis=dict(
+            title='Viewers'),
+        yaxis2=dict(
+            title='Streamers',
+            overlaying='y',
+            side='right',
+            range=[0, y2_max*1.2],
+            tickfont=dict(
+                color='rgb(158, 88, 201)'
+            )),
+        legend=dict(x=-.1, y=1.1)
+    )
+
+    # a line chart
     graph_one = []    
     graph_one.append(
       go.Scatter(
@@ -99,9 +157,10 @@ def return_figures():
     
     # append all charts to the figures list
     figures = []
-    figures.append(dict(data=graph_one, layout=layout_one))
-    figures.append(dict(data=graph_two, layout=layout_two))
-    figures.append(dict(data=graph_three, layout=layout_three))
-    figures.append(dict(data=graph_four, layout=layout_four))
+    figures.append(dict(data=trace_data, layout=layout_data)
+    #figures.append(dict(data=graph_one, layout=layout_one))
+    #figures.append(dict(data=graph_two, layout=layout_two))
+    #figures.append(dict(data=graph_three, layout=layout_three))
+    #figures.append(dict(data=graph_four, layout=layout_four))
 
     return figures
