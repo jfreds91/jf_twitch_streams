@@ -90,7 +90,7 @@ def return_figures():
             tickfont=dict(
                 color='rgb(158, 88, 201)'
             )),
-        legend=dict(x=-.1, y=1.1)
+        legend=dict(x=.85, y=1.1)
     )
 
     # a line chart
