@@ -3,26 +3,6 @@ import plotly.graph_objs as go
 from twitch import TwitchClient
 from twitch.helix.api import TwitchHelix
 
-# Use this file to read in your data and prepare the plotly visualizations. The path to the data files are in
-# `data/file_name.csv`
-
-def return_data():
-    # initialize client
-    client  = TwitchClient(client_id='o77c1kh7o8s52pt3dtzj8xaypu0699')
-    
-    # use client to query games (returns top 10 by default)
-    games = client.games.get_top()
-    
-    # parse returned structure for vars
-    game_results = []
-    game_images = []
-    for game in games:
-        game_results.append((game['game']['name'], game['viewers'], game['channels']))
-        game_images.append(game['game']['box']['medium'])
-
-    return game_results
-
-
 def return_figures():
     """Creates four plotly visualizations
 
@@ -30,13 +10,13 @@ def return_figures():
         None
 
     Returns:
-        list (dict): list containing the four plotly visualizations
+        list (dict): list containing plotly visualizations
 
     """
 ###################### CHART 1 ########################
     # initialize client
     client_id='o77c1kh7o8s52pt3dtzj8xaypu0699'
-    client  = TwitchClient(client_id=client_id)
+    client = TwitchClient(client_id=client_id)
     
     # use client to query games (returns top 10 by default)
     games = client.games.get_top()
@@ -105,7 +85,7 @@ def return_figures():
     for i in range(n_streams):
         stream_results.append((streams[i]['user_name'], streams[i]['game_id'], streams[i]['viewer_count']))
 
-        # Query API for games by ID
+    # Query API for games by ID
     game_ids = []
     for game_id in [i[1] for i in stream_results]:
         if game_id != '':

@@ -6,9 +6,6 @@ from wrangling_scripts.wrangle_data import return_figures, return_data
 @app.route('/')
 @app.route('/index')
 def index():
-
-    data = return_data()
-    testdata = str(data)
     
     figures = return_figures()
 
