@@ -16,7 +16,5 @@ def index():
     figuresJSON = json.dumps(figures, cls=plotly.utils.PlotlyJSONEncoder)
 
     return render_template('index.html',
-                           data = data,
-                           testdata = testdata,
                            ids=ids,
                            figuresJSON=figuresJSON)
