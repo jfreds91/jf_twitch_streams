@@ -99,14 +99,14 @@ def kickoff_sql_thread(max_size = 9000, sleep_time = 900):
             print('timestamp: {}, length: {}'.format(datetime.datetime.now(), len(df)))
             time.sleep(sleep_time)
 
-        # prepare to start thread
-        engine = get_sql_engine()
-        global stop_threads
-        stop_threads = False
+    # prepare to start thread
+    engine = get_sql_engine()
+    global stop_threads
+    stop_threads = False
 
-        # create and start thread
-        t1 = threading.Thread(target=constant_query, args = (engine, max_size, sleep_time))
-        t1.start()
+    # create and start thread
+    t1 = threading.Thread(target=constant_query, args = (engine, max_size, sleep_time))
+    t1.start()
 
     
 
