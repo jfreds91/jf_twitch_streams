@@ -1,4 +1,3 @@
-from twitch import TwitchClient
 import sqlalchemy
 from slalchemy import create_engine
 from sqlalchemy import Table, Columns, Integer, String, MetaData, ForeignKey
@@ -9,6 +8,9 @@ import time
 
 import threading
 
+import os
+import psycopg2
+
 
 def continuous_sql_update():
     '''
@@ -17,10 +19,6 @@ def continuous_sql_update():
     RETURNS:
         engine (sqlalchemy engine): 
     '''
-    
-    # create v5 client
-    client_id = 'o77c1kh7o8s52pt3dtzj8xaypu0699'
-    v5_client  = TwitchClient(client_id=client_id)
     
     # create database engine
     metadata = MetaData()
@@ -32,3 +30,6 @@ def continuous_sql_update():
                  )
     engine = create_engine('sqlite:///twitch.db')
     metadata.create_all(engine)
+    
+    DATABASE_URL = os.environ['DATABASE_URL']
+    
