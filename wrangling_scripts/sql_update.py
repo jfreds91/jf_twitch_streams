@@ -41,6 +41,7 @@ def get_sql_engine():
     
     return engine
     
+    
 def kickoff_sql_thread(max_size = 9000, sleep_time = 900):
     '''
     This function starts a thread which continuously updates the sql database
@@ -109,5 +110,11 @@ def kickoff_sql_thread(max_size = 9000, sleep_time = 900):
     t1.start()
 
     
-
+def get_sql_size():
+    engine = get_sql_engine()
     
+    c = engine.execute("SELECT COUNT(*) FROM Games")
+    num_rows = c.fetchall()[0][0]
+    c.close()
+    
+    return num_rows
