@@ -9,7 +9,8 @@ listen = ['high', 'default', 'low']
 # added /0 per stack overflow?
 # trying no port?
 # trying redistogo
-redis_url = os.getenv('REDISTOGO_URL', 'redis://localhost:6379')
+# trying redis
+redis_url = os.getenv('REDIS_URL', 'redis://localhost:6379')
 
 rq_conn = redis.from_url(redis_url)
 
