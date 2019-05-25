@@ -77,37 +77,43 @@ def kickoff_sql_thread(max_size = 9000, sleep_time = 900):
             c.close()
         
     
-    def constant_query(engine, max_size, sleep_time):
-        '''
-        function which continuously adds to the Games table using the given SQL engine
+#     def constant_query(engine, max_size, sleep_time):
+#         '''
+#         function which continuously adds to the Games table using the given SQL engine
 
-        INPUTS:
-            v5_client: the twitch v5 client
-            engine: sql alchemy database engine
-            max_size (int): the size at which the function begins deleting rows. Note that the actual
-                            size of the database will be max_size + query num (10)
-            sleep_time (int): the API query interval in seconds
-        '''
+#         INPUTS:
+#             v5_client: the twitch v5 client
+#             engine: sql alchemy database engine
+#             max_size (int): the size at which the function begins deleting rows. Note that the actual
+#                             size of the database will be max_size + query num (10)
+#             sleep_time (int): the API query interval in seconds
+#         '''
 
-        while True:
-            if stop_threads:
-                break
+#         while True:
+#             if stop_threads:
+#                 break
 
-            check_table_size(engine, max_size)
-            df = get_top_games() # this function is from twitch_api_funcs, imported
-            df.to_sql('Games', engine, index=False, if_exists = 'append')
+#             check_table_size(engine, max_size)
+#             df = get_top_games() # this function is from twitch_api_funcs, imported
+#             df.to_sql('Games', engine, index=False, if_exists = 'append')
 
-            print('timestamp: {}, length: {}'.format(datetime.datetime.now(), len(df)))
-            time.sleep(sleep_time)
+#             print('timestamp: {}, length: {}'.format(datetime.datetime.now(), len(df)))
+#             time.sleep(sleep_time)
 
     # prepare to start thread
     engine = get_sql_engine()
-    global stop_threads
-    stop_threads = False
+#     global stop_threads
+#     stop_threads = False
 
     # create and start thread
-    t1 = threading.Thread(target=constant_query, args = (engine, max_size, sleep_time))
-    t1.start()
+#     t1 = threading.Thread(target=constant_query, args = (engine, max_size, sleep_time))
+#     t1.start()
+
+    while True:
+        check_table_size(engine, max_size)
+        df = get_top_games()
+        df.to_sql('Games', engine, index=False, if_exists = 'append')
+        time.sleep(sleep_time)
 
     
 def get_sql_size():
