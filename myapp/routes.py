@@ -8,8 +8,10 @@ from wrangling_scripts.sql_update import get_sql_connection
 @app.route('/index')
 def index():
     
+    # figures info
     figures = return_figures()
     
+    # sql info
     db_url = get_sql_connection()
 
     # plot ids for the html id tag
