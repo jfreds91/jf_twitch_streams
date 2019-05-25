@@ -12,7 +12,7 @@ def index():
     figures = return_figures()
     
     # sql info
-    db_url = continuous_sql_update()
+    #db_url = continuous_sql_update()
 
     # plot ids for the html id tag
     ids = ['figure-{}'.format(i) for i, _ in enumerate(figures)]
@@ -21,6 +21,6 @@ def index():
     figuresJSON = json.dumps(figures, cls=plotly.utils.PlotlyJSONEncoder)
 
     return render_template('index.html',
-                           db_url = db_url,
+                           #db_url = db_url,
                            ids=ids,
                            figuresJSON=figuresJSON)
