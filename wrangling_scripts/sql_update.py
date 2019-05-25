@@ -56,7 +56,7 @@ def kickoff_sql_thread(max_size = 9000, sleep_time = 900):
     def check_table_size(engine, max_size):
     # this function checks the number of rows in the table and deletes the oldest entires
     # if over max_size threshold
-        c = engine.execute("SELECT COUNT(*) FROM Games")
+        c = engine.execute('SELECT COUNT(*) FROM "Games";')
         num_rows = c.fetchall()[0][0]
         c.close()
         #print('table contains {} rows'.format(num_rows))
@@ -72,7 +72,7 @@ def kickoff_sql_thread(max_size = 9000, sleep_time = 900):
             connection.execute(del_statement)
             connection.close()
 
-            c = engine.execute("SELECT COUNT(*) FROM Games")
+            c = engine.execute('SELECT COUNT(*) FROM "Games"')
             num_rows = c.fetchall()[0][0]
             c.close()
         
@@ -113,7 +113,7 @@ def kickoff_sql_thread(max_size = 9000, sleep_time = 900):
 def get_sql_size():
     engine = get_sql_engine()
     
-    c = engine.execute("SELECT COUNT(*) FROM Games")
+    c = engine.execute('SELECT COUNT(*) FROM "Games";')
     num_rows = c.fetchall()[0][0]
     c.close()
     
