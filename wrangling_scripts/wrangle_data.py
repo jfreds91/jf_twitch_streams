@@ -3,6 +3,7 @@ import plotly.graph_objs as go
 from twitch import TwitchClient
 from twitch.helix.api import TwitchHelix
 from wrangling_scripts.twitch_api_funcs import get_top_games, get_top_streams
+from wrangling_scripts.sql_update import get_sql_engine
 
 def return_figures():
     """Creates four plotly visualizations
@@ -139,10 +140,28 @@ def return_figures():
         )
     )
     
+    
+    ################################### CHART 3 ################################
+    # time series plot
+    engine = get_sql_engine()
+    df = pd.read_sql_table('Games', con = engine)
+    df['time'] = pd.to_datetime(df['time'])
+    trace3 = []
+    for key, grp in df.groupby(['game']):
+            trace = go.Scatter(
+                        x=grp['time'],
+                        y=grp['viewers'],
+                        name = key)
+            trace3.append(trace)
+
+    layout3 = dict(
+        title = 'Time Series Game Viewership plot')
+    
     # append all charts to the figures list
     figures = []
     figures.append(dict(data=trace_one, layout=layout_one))
     figures.append(dict(data=[data_two], layout=layout_two))
+    figures.append(dict(data=trace3, layout=layout3))
     #figures.append(dict(data=graph_three, layout=layout_three))
     #figures.append(dict(data=graph_four, layout=layout_four))
 

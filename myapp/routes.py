@@ -2,7 +2,7 @@ from myapp import app
 import json, plotly
 from flask import render_template
 from wrangling_scripts.wrangle_data import return_figures
-from wrangling_scripts.sql_update import continuous_sql_update
+
 
 @app.route('/')
 @app.route('/index')
