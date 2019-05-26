@@ -76,45 +76,16 @@ def kickoff_sql_thread(DATABASE_URL, max_size = 9000, sleep_time = 900):
             c = engine.execute('SELECT COUNT(*) FROM "Games"')
             num_rows = c.fetchall()[0][0]
             c.close()
+            
+            return num_rows
 
-
-    #     def constant_query(engine, max_size, sleep_time):
-    #         '''
-    #         function which continuously adds to the Games table using the given SQL engine
-
-    #         INPUTS:
-    #             v5_client: the twitch v5 client
-    #             engine: sql alchemy database engine
-    #             max_size (int): the size at which the function begins deleting rows. Note that the actual
-    #                             size of the database will be max_size + query num (10)
-    #             sleep_time (int): the API query interval in seconds
-    #         '''
-
-    #         while True:
-    #             if stop_threads:
-    #                 break
-
-    #             check_table_size(engine, max_size)
-    #             df = get_top_games() # this function is from twitch_api_funcs, imported
-    #             df.to_sql('Games', engine, index=False, if_exists = 'append')
-
-    #             print('timestamp: {}, length: {}'.format(datetime.datetime.now(), len(df)))
-    #             time.sleep(sleep_time)
-    
-    
     try:
         # prepare to start thread
         engine = get_sql_engine(DATABASE_URL = DATABASE_URL) # worker appears to  be unable to get engine because database is not in local env vars
-    #     global stop_threads
-    #     stop_threads = False
-
-        # create and start thread
-    #     t1 = threading.Thread(target=constant_query, args = (engine, max_size, sleep_time))
-    #     t1.start()
-
+        
         while True:
 
-            check_table_size(engine, max_size)
+            num_rows = check_table_size(engine, max_size)
 
             print('############################## Querying API #################################')
             df = get_top_games()
@@ -122,8 +93,8 @@ def kickoff_sql_thread(DATABASE_URL, max_size = 9000, sleep_time = 900):
             time.sleep(sleep_time)
     except Exception as e:
         print(e)
-        print('num_rows = {}, type = {}'.format(num_rows, type(num_rows)))
-        print('max_size = {}, type = {}'.format(max_size, type(max_size)))
+        #print('num_rows = {}, type = {}'.format(num_rows, type(num_rows)))
+        #print('max_size = {}, type = {}'.format(max_size, type(max_size)))
 
     
 def get_sql_size():
