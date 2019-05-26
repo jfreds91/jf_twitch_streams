@@ -151,6 +151,7 @@ def return_figures():
             trace = go.Scatter(
                         x=grp['time'],
                         y=grp['viewers'],
+                        mode = 'lines+markers',
                         name = key)
             trace3.append(trace)
 
