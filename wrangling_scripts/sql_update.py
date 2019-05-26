@@ -42,7 +42,7 @@ def get_sql_engine():
     return engine
     
     
-def kickoff_sql_thread(max_size = 9000, sleep_time = 900):
+def kickoff_sql_thread(engine, max_size = 9000, sleep_time = 900):
     '''
     This function starts a thread which continuously updates the sql database
     This function is to be run once the app has compiled, one time
@@ -52,7 +52,7 @@ def kickoff_sql_thread(max_size = 9000, sleep_time = 900):
         sleep_time (int): number of seconds between twitch queries
     RETURNS: none
     '''
-    try:
+    
         def check_table_size(engine, max_size):
         # this function checks the number of rows in the table and deletes the oldest entires
         # if over max_size threshold
@@ -99,9 +99,11 @@ def kickoff_sql_thread(max_size = 9000, sleep_time = 900):
 
     #             print('timestamp: {}, length: {}'.format(datetime.datetime.now(), len(df)))
     #             time.sleep(sleep_time)
-
+    
+    
+    try:
         # prepare to start thread
-        engine = get_sql_engine()
+        #engine = get_sql_engine() # worker appears to  be unable to get engine because database is not in local env vars
     #     global stop_threads
     #     stop_threads = False
 
