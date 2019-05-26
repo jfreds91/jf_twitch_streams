@@ -12,4 +12,4 @@ from worker import rq_conn
 engine = get_sql_engine()
 
 q = Queue(connection = rq_conn)
-q.enqueue(kickoff_sql_thread, args=(engine,), 'http://heroku.com')
+q.enqueue(kickoff_sql_thread, engine)
