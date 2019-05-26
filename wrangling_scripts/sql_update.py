@@ -53,28 +53,28 @@ def kickoff_sql_thread(engine, max_size = 9000, sleep_time = 900):
     RETURNS: none
     '''
     
-        def check_table_size(engine, max_size):
-        # this function checks the number of rows in the table and deletes the oldest entires
-        # if over max_size threshold
-            c = engine.execute('SELECT COUNT(*) FROM "Games";')
-            num_rows = int(c.fetchall()[0][0])
+    def check_table_size(engine, max_size):
+    # this function checks the number of rows in the table and deletes the oldest entires
+    # if over max_size threshold
+        c = engine.execute('SELECT COUNT(*) FROM "Games";')
+        num_rows = int(c.fetchall()[0][0])
+        c.close()
+        #print('table contains {} rows'.format(num_rows))
+
+        while num_rows >= max_size:
+            #print('\tmax table size reached, deleting oldest entries')
+            df = pd.read_sql_table('Games', con = engine)
+            df['time'] = pd.to_datetime(df['time'])
+            mintime = df['time'].min().strftime('%Y-%m-%d %H:%M:%S.%f')
+
+            del_statement = games.delete().where(games.c.time == mintime)
+            connection = engine.connect()
+            connection.execute(del_statement)
+            connection.close()
+
+            c = engine.execute('SELECT COUNT(*) FROM "Games"')
+            num_rows = c.fetchall()[0][0]
             c.close()
-            #print('table contains {} rows'.format(num_rows))
-
-            while num_rows >= max_size:
-                #print('\tmax table size reached, deleting oldest entries')
-                df = pd.read_sql_table('Games', con = engine)
-                df['time'] = pd.to_datetime(df['time'])
-                mintime = df['time'].min().strftime('%Y-%m-%d %H:%M:%S.%f')
-
-                del_statement = games.delete().where(games.c.time == mintime)
-                connection = engine.connect()
-                connection.execute(del_statement)
-                connection.close()
-
-                c = engine.execute('SELECT COUNT(*) FROM "Games"')
-                num_rows = c.fetchall()[0][0]
-                c.close()
 
 
     #     def constant_query(engine, max_size, sleep_time):
