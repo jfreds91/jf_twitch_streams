@@ -8,8 +8,9 @@ from myapp import routes
 from wrangling_scripts.sql_update import kickoff_sql_thread, get_sql_engine
 from rq import Queue
 from worker import rq_conn
+import os
 
-engine = get_sql_engine()
+DATABASE_URL = os.environ['DATABASE_URL']
 
 q = Queue(connection = rq_conn)
-q.enqueue(kickoff_sql_thread, engine)
+q.enqueue(kickoff_sql_thread, DATABASE_URL)

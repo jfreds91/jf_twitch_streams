@@ -15,7 +15,7 @@ import psycopg2
 from wrangling_scripts.twitch_api_funcs import get_top_games
 
 
-def get_sql_engine():
+def get_sql_engine(DATABASE_URL=None):
     '''
     This functions kicks off the SQL database update script
     
@@ -24,7 +24,8 @@ def get_sql_engine():
     '''
         
     # create database engine
-    DATABASE_URL = os.environ['DATABASE_URL']
+    if DATABASE_URL is None:
+        DATABASE_URL = os.environ['DATABASE_URL']
     
     metadata = MetaData()
     games = Table('Games', metadata,
@@ -42,7 +43,7 @@ def get_sql_engine():
     return engine
     
     
-def kickoff_sql_thread(engine, max_size = 9000, sleep_time = 900):
+def kickoff_sql_thread(DATABASE_URL, max_size = 9000, sleep_time = 900):
     '''
     This function starts a thread which continuously updates the sql database
     This function is to be run once the app has compiled, one time
@@ -103,7 +104,7 @@ def kickoff_sql_thread(engine, max_size = 9000, sleep_time = 900):
     
     try:
         # prepare to start thread
-        #engine = get_sql_engine() # worker appears to  be unable to get engine because database is not in local env vars
+        engine = get_sql_engine(DATABASE_URL = DATABASE_URL) # worker appears to  be unable to get engine because database is not in local env vars
     #     global stop_threads
     #     stop_threads = False
 
