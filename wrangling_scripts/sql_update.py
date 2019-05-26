@@ -110,7 +110,10 @@ def kickoff_sql_thread(max_size = 9000, sleep_time = 900):
 #     t1.start()
 
     while True:
+        
         check_table_size(engine, max_size)
+        
+        print('############################## Querying API #################################')
         df = get_top_games()
         df.to_sql('Games', engine, index=False, if_exists = 'append')
         time.sleep(sleep_time)
