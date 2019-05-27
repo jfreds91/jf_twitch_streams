@@ -85,14 +85,14 @@ def kickoff_sql_thread(DATABASE_URL, max_size = 9000):
         # prepare to start thread
         engine = get_sql_engine(DATABASE_URL = DATABASE_URL) # worker appears to  be unable to get engine because database is not in local env vars
         
-        while True:
+        #while True:
 
-            num_rows = check_table_size(engine, max_size)
+        num_rows = check_table_size(engine, max_size)
 
-            print('############################## Querying API #################################')
-            df = get_top_games()
-            df.to_sql('Games', engine, index=False, if_exists = 'append')
-            #time.sleep(sleep_time)
+        print('############################## Querying API #################################')
+        df = get_top_games()
+        df.to_sql('Games', engine, index=False, if_exists = 'append')
+       #time.sleep(sleep_time)
     except Exception as e:
         print(e)
         #print('num_rows = {}, type = {}'.format(num_rows, type(num_rows)))
