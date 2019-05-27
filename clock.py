@@ -1,10 +1,12 @@
 from apscheduler.schedulers.blocking import BlockingScheduler
-#import os
+import os
 
 
 
 def testing1():
-    print('test output!')
+    print('attemping to get getdatabase env var')
+    DATABASE_URL = os.environ['DATABASE_URL']
+    print(DATABASE_URL)
     
 if __name__ == '__main__':
     from apscheduler.schedulers.blocking import BlockingScheduler
