@@ -1,10 +1,15 @@
 from apscheduler.schedulers.blocking import BlockingScheduler
-import os
+#import os
 
-sched = BlockingScheduler()
 
-@sched.scheduled_job('interval', minutes = 1)
-def timed_job():
-#     DATABASE_URL = os.environ['DATABASE_URL']
-#     print(DATABASE_URL)
+
+def testing1():
     print('test output!')
+    
+if __name__ == '__main__':
+    from apscheduler.schedulers.blocking import BlockingScheduler
+    sched = BlockingScheduler()
+        
+    sched.add_job(testing1, 'cron', id='run_on_interval', minute='*/1')
+        
+sched.start()
