@@ -1,8 +1,8 @@
 from apscheduler.schedulers.blocking import BlockingScheduler
 import os
 from wrangling_scripts.sql_update import kickoff_sql_thread
-from rq import Queue
-from worker import rq_conn
+#from rq import Queue
+#from worker import rq_conn
 
 
 
@@ -10,8 +10,11 @@ def testing1():
     print('########## kicking off scheduled job ############')
     DATABASE_URL = os.environ['DATABASE_URL']
     
-    q = Queue(connection = rq_conn)
-    q.enqueue(kickoff_sql_thread, DATABASE_URL)
+    #q = Queue(connection = rq_conn)
+    #q.enqueue(kickoff_sql_thread, DATABASE_URL)
+    
+    # run directly due to dyno limits preventing free worker
+    kickoff_sql_thread, DATABASE_URL
     
 if __name__ == '__main__':
     #from apscheduler.schedulers.blocking import BlockingScheduler
