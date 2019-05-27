@@ -43,7 +43,7 @@ def get_sql_engine(DATABASE_URL=None):
     return engine
     
     
-def kickoff_sql_thread(DATABASE_URL, max_size = 9000, sleep_time = 900):
+def kickoff_sql_thread(DATABASE_URL, max_size = 9000):
     '''
     This function starts a thread which continuously updates the sql database
     This function is to be run once the app has compiled, one time
@@ -53,6 +53,8 @@ def kickoff_sql_thread(DATABASE_URL, max_size = 9000, sleep_time = 900):
         sleep_time (int): number of seconds between twitch queries
     RETURNS: none
     '''
+    
+    print('############## starting kickoff_sql_thread ###############')
     
     def check_table_size(engine, max_size):
     # this function checks the number of rows in the table and deletes the oldest entires
@@ -90,7 +92,7 @@ def kickoff_sql_thread(DATABASE_URL, max_size = 9000, sleep_time = 900):
             print('############################## Querying API #################################')
             df = get_top_games()
             df.to_sql('Games', engine, index=False, if_exists = 'append')
-            time.sleep(sleep_time)
+            #time.sleep(sleep_time)
     except Exception as e:
         print(e)
         #print('num_rows = {}, type = {}'.format(num_rows, type(num_rows)))
