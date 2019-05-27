@@ -20,6 +20,6 @@ if __name__ == '__main__':
     #from apscheduler.schedulers.blocking import BlockingScheduler
     sched = BlockingScheduler()
         
-    sched.add_job(testing1, 'cron', id='run_on_interval', minute='*/1')
+    sched.add_job(testing1, 'cron', id='run_on_interval', minute='*/10')
         
 sched.start()
