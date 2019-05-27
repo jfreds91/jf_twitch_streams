@@ -14,7 +14,7 @@ def testing1():
     #q.enqueue(kickoff_sql_thread, DATABASE_URL)
     
     # run directly due to dyno limits preventing free worker
-    kickoff_sql_thread, DATABASE_URL
+    kickoff_sql_thread(DATABASE_URL)
     
 if __name__ == '__main__':
     #from apscheduler.schedulers.blocking import BlockingScheduler
