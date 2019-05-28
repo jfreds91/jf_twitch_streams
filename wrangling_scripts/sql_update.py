@@ -143,11 +143,11 @@ def scheduled_sql_task(engine, table_name, max_size=9000):
     print('added rows')
     
     # check size
-    num_rows = check_table_size_func(engine, table_name)
+    num_rows = check_table_size(engine, table_name)
     print('table has {} rows'.format(num_rows))
     while num_rows > max_size:
         print('deleting rows...')
         del_from_table(engine, table_name)
-        num_rows = check_table_size_func(engine, table_name)
+        num_rows = check_table_size(engine, table_name)
     
     
