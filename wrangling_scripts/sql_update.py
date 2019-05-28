@@ -61,7 +61,7 @@ def check_table_size(engine, table_name):
     try:
         cur.execute('SELECT COUNT(*) FROM {};'.format(table_name))
         num_rows = cur.fetchall()[0][0]
-        print('found {} rows in database'.format(num))
+        print('found {} rows in database'.format(num_rows))
     except Exception as e:
         print(e)
         conn.rollback()
