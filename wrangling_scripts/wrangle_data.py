@@ -144,7 +144,7 @@ def return_figures():
     ################################### CHART 3 ################################
     # time series plot
     engine = get_sql_engine()
-    df = pd.read_sql_table('Games', con = engine)
+    df = pd.read_sql_table('games_table', con = engine)
     df['time'] = pd.to_datetime(df['time'])
     trace3 = []
     for key, grp in df.groupby(['game']):

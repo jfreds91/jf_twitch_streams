@@ -4,6 +4,7 @@ from twitch.helix.api import TwitchHelix
 import pandas as pd
 import datetime
 import time
+import pytz
 
 client_id = 'o77c1kh7o8s52pt3dtzj8xaypu0699'
 
@@ -26,7 +27,10 @@ def get_top_games(v5_client = get_v5(), limit = 10):
         df (DataFrame): dataframe containing timestamped results
     '''
     
-    curr_timestamp = datetime.datetime.now()
+    #curr_timestamp = datetime.datetime.now()
+    utc_now = pytz.utc.localize(datetime.datetime.utcnow())
+    pst_now = utc_now.astimezone(pytz.timezone("US/Eastern"))
+    curr_timestamp = pst_now.isoformat()
     
     top_games = v5_client.games.get_top(limit = limit)
     game_results = []
