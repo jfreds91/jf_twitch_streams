@@ -17,7 +17,7 @@ def auto_update_sql_table():
     # run directly due to dyno limits preventing free worker
     engine = get_sql_engine(DATABASE_URL)
     recreate_table(DATABASE_URL, 'games_table')
-    scheduled_sql_task(DATABASE_URL, 'games_table')
+    scheduled_sql_task(engine, 'games_table')
     
 if __name__ == '__main__':
     #from apscheduler.schedulers.blocking import BlockingScheduler
