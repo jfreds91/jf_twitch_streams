@@ -9,10 +9,8 @@ import requests
 
 def auto_update_sql_table():
     print('########## kicking off scheduled job ############')
-    # kill database connections
-    !(heroku ps:killall)
     
-    # get database url
+    # get database url+
     DATABASE_URL = os.environ['DATABASE_URL']
     
     ##### Not run due to dyno constrictions on free heroku account... running on scheduler only #####
@@ -26,6 +24,9 @@ def auto_update_sql_table():
     engine = get_sql_engine(DATABASE_URL)
     recreate_table(DATABASE_URL, 'games_table')
     scheduled_sql_task(engine, 'games_table')
+    
+    # kill database connections
+    os.system('heroku ps:killall')
     
 if __name__ == '__main__':
     #from apscheduler.schedulers.blocking import BlockingScheduler
