@@ -9,6 +9,10 @@ import requests
 
 def auto_update_sql_table():
     print('########## kicking off scheduled job ############')
+    # kill database connections
+    !(heroku ps:killall)
+    
+    # get database url
     DATABASE_URL = os.environ['DATABASE_URL']
     
     ##### Not run due to dyno constrictions on free heroku account... running on scheduler only #####
