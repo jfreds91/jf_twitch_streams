@@ -7,7 +7,7 @@ import requests
 
 
 
-def auto_update_sql_table():
+def auto_update_sql_table(engine, DATABASE_URL):
     print('########## kicking off scheduled job ############')
     
     # get database url+
@@ -26,12 +26,13 @@ def auto_update_sql_table():
     scheduled_sql_task(engine, 'games_table')
     
     # kill database connections
-    os.system('heroku ps:killall')
+    #os.system('heroku ps:killall')
+    engine.dispose()
     
 if __name__ == '__main__':
     #from apscheduler.schedulers.blocking import BlockingScheduler
     sched = BlockingScheduler()
-        
+    
     sched.add_job(auto_update_sql_table, 'cron', id='run_on_interval', minute='*/10')
         
 sched.start()

@@ -44,6 +44,7 @@ def recreate_table(database_url, table_name):
     conn.commit()
     cur.close()
     conn.close()
+    #print('closed connections in recreate_table()')
     return
     
     
