@@ -7,7 +7,7 @@ import requests
 
 
 
-def auto_update_sql_table(engine, DATABASE_URL):
+def auto_update_sql_table():
     print('########## kicking off scheduled job ############')
     
     # get database url+
