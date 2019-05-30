@@ -158,6 +158,8 @@ def return_figures():
     layout3 = dict(
         title = 'Time Series Game Viewership plot')
     
+    engine.dispose()
+    
     # append all charts to the figures list
     figures = []
     figures.append(dict(data=trace_one, layout=layout_one))
