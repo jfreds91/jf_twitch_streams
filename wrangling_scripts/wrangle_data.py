@@ -171,7 +171,7 @@ def return_figures():
             name = game,
             line=dict(width=2, color= 'rgb(163, 163, 163)' if game not in nan_list else None)))
 
-layout = dict(
+layout3 = dict(
     title = 'Time Series Game Viewership plot',
     xaxis=dict(
         type = 'date',
