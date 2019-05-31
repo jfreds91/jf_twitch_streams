@@ -4,6 +4,7 @@ from twitch import TwitchClient
 from twitch.helix.api import TwitchHelix
 from wrangling_scripts.twitch_api_funcs import get_top_games, get_top_streams
 from wrangling_scripts.sql_update import get_sql_engine
+import math
 
 def return_figures():
     """Creates four plotly visualizations
