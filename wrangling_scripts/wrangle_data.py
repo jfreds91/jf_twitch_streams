@@ -171,20 +171,20 @@ def return_figures():
             name = game,
             line=dict(width=2, color= 'rgb(163, 163, 163)' if game not in nan_list else None)))
 
-layout3 = dict(
-    title = 'Time Series Game Viewership plot',
-    xaxis=dict(
-        type = 'date',
-        tickformat = '%a %H:%M',
-        showgrid=True,
-        gridcolor = '#a3a3a3',
-        dtick = 3600000*2, # dtick is in terms of milliseconds
-        rangeslider=dict(
-            visible = True,
-            bordercolor = '#000000'
+    layout3 = dict(
+        title = 'Time Series Game Viewership plot',
+        xaxis=dict(
+            type = 'date',
+            tickformat = '%a %H:%M',
+            showgrid=True,
+            gridcolor = '#a3a3a3',
+            dtick = 3600000*2, # dtick is in terms of milliseconds
+            rangeslider=dict(
+                visible = True,
+                bordercolor = '#000000'
+                )
             )
         )
-    )
     
     engine.dispose()
     
