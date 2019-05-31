@@ -146,14 +146,29 @@ def return_figures():
     engine = get_sql_engine()
     df = pd.read_sql_table('games_table', con = engine)
     df['time'] = pd.to_datetime(df['time'])
+    
+    # modify
+    df_p = df.pivot(index = 'time', columns = 'game', values = 'viewers')
+    nan_list = []
+    df_p_cols = df_p.columns.tolist()
+    for game in df_p_cols:
+        if not math.isnan(df_p.iloc[-1][game]):
+            nan_list.append(game)
+        
+    nan_list
+    for game in nan_list:
+        df_p_cols.insert(0, df_p_cols.pop(df_p_cols.index(game)))
+
+    df_p_2 = df_p.loc[:, df_p_cols]
+    
     trace3 = []
-    for key, grp in df.groupby(['game']):
-            trace = go.Scatter(
-                        x=grp['time'],
-                        y=grp['viewers'],
-                        mode = 'lines',
-                        name = key)
-            trace3.append(trace)
+    for game in df_p_2.columns.tolist():
+        trace3.append(go.Scatter(
+            x = df_p.index.tolist(),
+            y = df_p[game].values.tolist(),
+            connectgaps = False,
+            name = game,
+            line=dict(width=2, color= 'rgb(163, 163, 163)' if game not in nan_list else None)))
 
     layout3 = dict(
         title = 'Time Series Game Viewership plot')
