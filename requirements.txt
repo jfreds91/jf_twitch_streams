@@ -34,6 +34,6 @@ six==1.12.0
 SQLAlchemy==1.3.3
 traitlets==4.3.2
 tzlocal==1.5.1
-urllib3==1.24.3
+urllib3==1.26.5
 Werkzeug==0.15.3
 zope.interface==4.6.0
