@@ -22,7 +22,7 @@ plotly==3.9.0
 psycopg2-binary==2.8.2
 py4j==0.10.7
 pyrsistent==0.15.2
-pyspark==2.4.0
+pyspark==3.2.2
 python-dateutil==2.8.0
 python-twitch-client==0.6.0
 pytz==2019.1
